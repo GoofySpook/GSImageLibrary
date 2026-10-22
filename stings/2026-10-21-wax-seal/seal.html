@@ -1,0 +1,292 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- GS Grimoire WAX SEAL sting. Riffle backwards through a bestiary, close the book,
+     drop hot wax, GS rises out of it. Contract: DURATION, seek(t), ready, HITS, EVENTS. -->
+<style>
+@font-face{font-family:Cinzel;font-weight:600;src:url(fonts/Cinzel600.woff2)}
+@font-face{font-family:Fell;font-style:italic;src:url(fonts/FellItalic.woff2)}
+:root{--gold:#c8a84b;--ink:#2a1a10;--paper:#e8d9b8}
+html,body{margin:0;width:360px;height:640px;overflow:hidden;background:#0d0906}
+#table{position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 55% at 38% 30%,#4a3020 0%,#2a1a10 45%,#120b07 80%,#080503 100%)}
+#grain{position:absolute;inset:0;opacity:.35;mix-blend-mode:overlay}
+#cam{position:absolute;left:16px;top:184px;width:328px;height:232px}
+#shake{position:absolute;inset:0}
+.abs{position:absolute}
+.backboard{left:161px;top:-5px;width:172px;height:242px;border-radius:2px 6px 6px 2px;
+  background:#3b1a10;box-shadow:0 18px 30px rgba(0,0,0,.65),0 4px 8px rgba(0,0,0,.5)}
+.pagebase{left:164px;top:0;width:164px;height:232px;
+  box-shadow:1px 1px 0 #cdbd98,2px 2px 0 #b9a884,3px 3px 0 #a39270}
+.leaf{position:absolute;left:164px;top:0;width:164px;height:232px;transform-style:preserve-3d;transform-origin:0 50%}
+.cover{left:164px;top:-5px;width:170px;height:242px}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.back{transform:rotateY(180deg)}
+.dyn{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none}
+/* paper */
+.pg{background:var(--paper);color:var(--ink);font-family:Fell;padding:12px 13px 10px;box-sizing:border-box}
+.pg::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(ellipse at 50% 40%,rgba(255,250,235,.35),rgba(120,90,50,.18) 85%);pointer-events:none}
+.recto .gut{position:absolute;inset:0;background:linear-gradient(90deg,rgba(60,35,15,.38),rgba(60,35,15,0) 18%)}
+.verso .gut{position:absolute;inset:0;background:linear-gradient(270deg,rgba(60,35,15,.38),rgba(60,35,15,0) 18%)}
+.hdr{font:600 4.6px Cinzel;letter-spacing:1.2px;text-align:center;opacity:.6;margin-bottom:5px}
+.art{height:112px;background:#222 center/cover;border:1px solid #3a2414;box-shadow:inset 0 0 12px rgba(0,0,0,.5)}
+.ttl{font:600 9.5px Cinzel;letter-spacing:.6px;margin:6px 0 2px;color:#5a1414}
+.rule{height:1px;background:linear-gradient(90deg,#7a1c1c,rgba(122,28,28,0));margin:2px 0 4px}
+.txt{font-size:5.6px;line-height:1.38;text-align:justify;opacity:.88}
+.cols{column-count:2;column-gap:7px}
+.stat{margin:5px 0;padding:3px 4px;border-top:1.5px solid #7a1c1c;border-bottom:1.5px solid #7a1c1c;
+  background:rgba(122,28,28,.06);font-size:5px;line-height:1.35}
+.stat b{font-family:Cinzel;font-weight:600;color:#5a1414;font-size:5px}
+.vig{float:right;width:46px;height:46px;border-radius:50%;margin:0 0 3px 5px;background:#222 center/cover;
+  border:1px solid #3a2414}
+.drop{font:600 17px/0.8 Cinzel;float:left;margin:1px 3px 0 0;color:#7a1c1c}
+.folio{position:absolute;bottom:7px;left:0;right:0;text-align:center;font:600 5px Cinzel;opacity:.55}
+/* leather */
+.leather{background:radial-gradient(ellipse at 45% 40%,#5a2a18 0%,#40200f 60%,#2a130a 100%)}
+.tool{position:absolute;border:1px solid rgba(200,168,75,.75)}
+.tool2{position:absolute;border:.6px solid rgba(200,168,75,.45)}
+.corner{position:absolute;width:7px;height:7px;transform:rotate(45deg);border:1px solid rgba(200,168,75,.8)}
+.blind{position:absolute;left:50%;top:50%;width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.35),0 0 0 1px rgba(255,220,180,.06)}
+.endp{position:absolute;inset:5px 6px 5px 5px;background:
+  radial-gradient(ellipse 40% 25% at 30% 30%,rgba(140,40,40,.5),transparent 70%),
+  radial-gradient(ellipse 35% 30% at 70% 65%,rgba(110,25,30,.6),transparent 70%),
+  radial-gradient(ellipse 50% 20% at 45% 85%,rgba(90,60,30,.35),transparent 70%),#4a0f15;
+  box-shadow:inset 0 0 18px rgba(0,0,0,.6)}
+.spineHi{position:absolute;left:0;top:0;bottom:0;width:10px;background:linear-gradient(90deg,rgba(255,220,180,.12),rgba(0,0,0,.25))}
+#seal{position:absolute;left:0;top:0;width:360px;height:640px;overflow:visible;pointer-events:none}
+#fx{position:absolute;inset:0}
+.steam{position:absolute;width:90px;height:90px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,240,225,.22),rgba(255,240,225,0) 70%);filter:blur(6px);opacity:0}
+#tag{position:absolute;left:0;right:0;top:524px;text-align:center;font:italic 21px Fell;color:#ead9b8;opacity:0;
+  text-shadow:0 2px 8px rgba(0,0,0,.8)}
+#flash{position:absolute;inset:0;background:radial-gradient(circle at 50% 46.9%,rgba(255,215,140,.6),rgba(255,180,90,0) 26%);opacity:0;mix-blend-mode:screen}
+#black{position:absolute;inset:0;background:#000;opacity:0}
+#vignette{position:absolute;inset:0;background:radial-gradient(ellipse 75% 60% at 50% 46%,rgba(0,0,0,0) 55%,rgba(0,0,0,.55) 100%)}
+</style></head><body>
+<div id="table"></div>
+<svg id="grain" width="360" height="640"><filter id="wood"><feTurbulence type="fractalNoise" baseFrequency="0.006 0.18" numOctaves="3" seed="4"/>
+  <feColorMatrix values="0 0 0 0 .55  0 0 0 0 .38  0 0 0 0 .22  0 0 0 .9 0"/></filter><rect width="360" height="640" filter="url(#wood)"/></svg>
+<div id="cam"><div id="shake"><div id="book"></div></div></div>
+
+<svg id="seal" viewBox="0 0 360 640">
+  <defs>
+    <filter id="wax" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+      <feComponentTransfer in="SourceAlpha" result="mask"><feFuncA type="linear" slope="2.2"/></feComponentTransfer>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="h"/>
+      <feDiffuseLighting in="h" surfaceScale="7" diffuseConstant="1" lighting-color="#fff" result="diff">
+        <feDistantLight azimuth="235" elevation="38"/></feDiffuseLighting>
+      <feSpecularLighting id="spec" in="h" surfaceScale="7" specularConstant="1.2" specularExponent="14" lighting-color="#ffe9d6" result="spec">
+        <feDistantLight azimuth="235" elevation="24"/></feSpecularLighting>
+      <feFlood id="waxcol" flood-color="#b8141c" result="red"/>
+      <feComposite in="red" in2="diff" operator="arithmetic" k1="1.55" k2="0" k3="0" k4="0" result="shaded"/>
+      <feComposite in="shaded" in2="mask" operator="in" result="body"/>
+      <feComposite in="spec" in2="mask" operator="in" result="sp"/>
+      <feComposite in="body" in2="sp" operator="arithmetic" k1="0" k2="1" k3="0.7" k4="0"/>
+    </filter>
+    <filter id="soft"><feGaussianBlur stdDeviation="2.2"/></filter>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="4"/></filter>
+  </defs>
+  <g id="sealRoot" transform="translate(180 300)">
+    <ellipse id="dropShadow" cx="6" cy="8" rx="0" ry="0" fill="#000" opacity=".5" filter="url(#shadow)"/>
+    <path id="blobShadow" fill="#000" opacity="0" filter="url(#shadow)" transform="translate(3 5)"/>
+    <g id="hm" filter="url(#wax)">
+      <path id="blob" fill="#fff" fill-opacity=".45"/>
+      <g id="sats"></g>
+      <circle id="rim" r="60" fill="none" stroke="#fff" stroke-width="2.6" stroke-opacity="0"/>
+      <g id="dotsH"></g>
+      <text id="gsH" x="0" y="20" text-anchor="middle" font-family="Cinzel" font-weight="600" font-size="58"
+            letter-spacing="1" fill="#fff" fill-opacity="0">GS</text>
+    </g>
+    <circle id="drop" r="0" fill="#c01820"/>
+    <circle id="dropHi" r="0" cx="-2" cy="-2" fill="#ffd0c0" opacity=".7"/>
+    <g id="glow" style="mix-blend-mode:screen" opacity="0">
+      <text x="0" y="20" text-anchor="middle" font-family="Cinzel" font-weight="600" font-size="58" letter-spacing="1"
+            fill="#ffb84a" filter="url(#soft)" opacity=".8">GS</text>
+      <text x="0" y="20" text-anchor="middle" font-family="Cinzel" font-weight="600" font-size="58" letter-spacing="1"
+            fill="none" stroke="#ffe7a8" stroke-width=".7">GS</text>
+    </g>
+    <g id="dotsG" style="mix-blend-mode:screen"></g>
+  </g>
+</svg>
+<canvas id="embers" width="1080" height="1920" style="position:absolute;inset:0;width:360px;height:640px"></canvas>
+<div id="fx"><div class="steam" id="st0"></div><div class="steam" id="st1"></div><div class="steam" id="st2"></div></div>
+<div id="flash"></div>
+<div id="vignette"></div>
+<div id="tag">Sealed in the Archive</div>
+<div id="black"></div>
+
+<script src="lib/gsap.min.js"></script>
+<script>
+const W=164, H=232, NL=18, ART=20;
+const NAMES=["Shadow Jackal","Plague Beast","Plague Beast, Drowned","Bone Construct","The Slow Turning","The Wood Lord",
+ "Ember Wyrm","Frost Wyrm","Magma Brute","Magma Skulker","The Rising Tide","Frilled Lurker","The Horde","Cyan-Eyed Stalker",
+ "Scales of the Verdict","Scroll of Binding","Last Call Decanter","Shard of Unlife","Shard of Unlife, Cold","The Red Sash"];
+const PROSE=["It does not hunt the strongest. It hunts the one who looked away first, and it remembers the camp by smell long after the fire is out.",
+ "When the bell stops, count the doors. One more than there should be. The villagers stopped counting years ago and now leave it bread.",
+ "Roll for the knowledge, never for the danger. The party sees the wound in the floor before anyone steps on it; the dice decide what they do about it.",
+ "A creature that wants nothing cannot be bargained with, but a creature that wants one small thing will trade a kingdom for it. Find the small thing.",
+ "It speaks only in the voices of people it has buried, and it buried a great many people who told the truth.",
+ "The ink on this page was mixed with ash from a burned library. Read it aloud and something, somewhere, starts writing back."];
+const p=i=>PROSE[i%PROSE.length], img=i=>`art/a${String(i%ART+1).padStart(2,'0')}.jpg`;
+let seed=11; const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+
+function recto(i,folio){return `<div class="face pg recto">
+  <div class="hdr">BESTIARY OF THE ARCHIVE</div>
+  <div class="art" style="background-image:url(${img(i)})"></div>
+  <div class="ttl">${NAMES[i%ART]}</div><div class="rule"></div>
+  <div class="txt">${p(i)} ${p(i+2)}</div><div class="folio">${folio}</div><div class="gut"></div><div class="dyn"></div></div>`;}
+function verso(i,folio){
+  const v = i%3===0 ? `<div class="vig" style="background-image:url(${img(i+14)})"></div>` : '';
+  return `<div class="face pg verso back">
+  <div class="hdr">GS GRIMOIRE</div><div class="ttl">${NAMES[(i+7)%ART]}</div><div class="rule"></div>
+  <div class="txt cols">${v}<span class="drop">${NAMES[(i+7)%ART][0]}</span>${p(i+1)} ${p(i+3)} ${p(i+4)}
+    <div class="stat"><b>ARMOR CLASS</b> ${12+i%6} &nbsp; <b>HIT POINTS</b> ${40+i*7} &nbsp; <b>SPEED</b> 30 ft.<br>
+    <b>CHALLENGE</b> ${2+i%9} &nbsp; <b>SENSES</b> darkvision 60 ft.</div>${p(i+5)} ${p(i)}</div>
+  <div class="folio">${folio}</div><div class="gut"></div><div class="dyn"></div></div>`;}
+function coverFront(){return `<div class="face leather" style="border-radius:2px 6px 6px 2px">
+  <div class="spineHi"></div>
+  <div class="tool" style="inset:10px 10px 10px 13px"></div><div class="tool2" style="inset:14px 14px 14px 17px"></div>
+  ${[[9,6],[9,null],[null,6],[null,null]].map(([t,l])=>`<div class="corner" style="${t!==null?'top:'+(t+2):'bottom:11'}px;${l!==null?'left:'+(l+5):'right:7'}px"></div>`).join('')}
+  <div class="blind"></div><div class="dyn"></div></div>`;}
+function coverBack(){return `<div class="face back leather" style="border-radius:6px 2px 2px 6px"><div class="endp"></div><div class="dyn"></div></div>`;}
+
+/* ---------- build the book ---------- */
+const book=document.getElementById('book');
+book.innerHTML = `<div class="abs backboard leather"></div>
+  <div class="abs pagebase pg" style="padding:0">${recto(NL, 3).replace('face pg recto','face pg recto" style="position:absolute;inset:0;backface-visibility:visible')}</div>`;
+const leaves=[];
+for(let i=0;i<NL;i++){
+  const L=document.createElement('div'); L.className='leaf';
+  L.innerHTML = recto(NL-1-i, 2*(NL-i)+3) + verso(i, 2*(NL-i)+4);
+  book.appendChild(L); leaves.push(L);
+}
+const cover=document.createElement('div'); cover.className='leaf cover'; cover.innerHTML=coverFront()+coverBack();
+book.appendChild(cover);
+leaves.forEach((L,i)=>gsap.set(L,{rotationY:-180,transformPerspective:900,zIndex:100-i}));
+gsap.set(cover,{rotationY:-180,transformPerspective:900,zIndex:1});
+
+/* ---------- timeline ---------- */
+const tl=gsap.timeline({paused:true}), EV={flips:[]};
+const cam=document.getElementById('cam'), shake=document.getElementById('shake');
+gsap.set(cam,{transformPerspective:1100,rotationX:24,rotationZ:-5,scale:1.12,y:-6,transformOrigin:'50% 50%'});
+tl.to(cam,{rotationX:19,rotationZ:-2,scale:1.0,y:0,duration:3.6,ease:'sine.inOut'},0);
+
+// Riffle backwards: slow, very fast, slow
+let ft=0.45;
+for(let i=0;i<NL;i++){
+  const u=i/(NL-1), gap=0.07+0.30*Math.pow(1-Math.sin(Math.PI*u),1.6), dur=0.2+gap*1.05;
+  tl.to(leaves[i],{rotationY:0,duration:dur,ease:'power1.inOut'},ft)
+    .set(leaves[i],{zIndex:200+i},ft+dur*0.5);
+  EV.flips.push([+ft.toFixed(3),+dur.toFixed(3)]);
+  ft+=gap;
+}
+const lastLand = EV.flips.at(-1)[0]+EV.flips.at(-1)[1];
+
+// Close the cover: heavy, then a thump
+const cStart = lastLand + 0.12, cDur = 0.62, land = cStart + cDur;
+tl.to(cover,{rotationY:0,duration:cDur,ease:'power2.in'},cStart).set(cover,{zIndex:400},cStart+cDur*0.5);
+EV.close=+(Math.round(land*30)/30).toFixed(3);
+const S=1.5;  // final camera: cover centred, flat, top-down
+tl.to(cam,{x:-85*S,rotationX:0,rotationZ:0,scale:S,y:0,duration:1.05,ease:'power2.inOut'},cStart-0.15);
+tl.fromTo(shake,{x:0,y:0},{keyframes:{y:[0,3,-1.5,0.6,0],x:[0,-1,0.6,0,0]},duration:.22,ease:'none'},land);
+
+// Wax
+const WX={R:0,wob:0,k:0,heat:1,glow:0,ring:0,drop:0,sat:0,steam:0,flash:0};
+const q=x=>Math.round(x*30)/30;   // hits on the 30 fps frame grid
+const splat = q(land + 0.55), rise = splat + 0.95, HIT = q(rise + 0.55);
+EV.splat=+splat.toFixed(3); EV.hit=+HIT.toFixed(3);
+tl.to(WX,{drop:1,duration:.32,ease:'power2.in'},splat-.32)
+  .set(WX,{drop:0},splat)
+  .fromTo(WX,{R:0},{R:74,duration:.42,ease:'power3.out'},splat)
+  .fromTo(WX,{wob:1},{wob:0,duration:1.3,ease:'power2.out'},splat)
+  .fromTo(WX,{sat:1},{sat:0,duration:.5,ease:'power2.in'},splat+.05)
+  .fromTo(WX,{steam:0},{steam:1,duration:.4},splat+.1).to(WX,{steam:0,duration:1.6},splat+1.2)
+  .to(WX,{k:1.18,duration:.42,ease:'power2.in'},rise)        // letters push up out of the wax
+  .to(WX,{k:1,duration:.5,ease:'back.out(2.5)'},rise+.42)
+  .to(WX,{heat:0,duration:2.4,ease:'sine.out'},rise)
+  .fromTo(WX,{flash:0},{flash:1,duration:.05},HIT-.05).to(WX,{flash:0,duration:.7,ease:'power2.out'},HIT)   // peak ON the hit frame
+  .fromTo(WX,{glow:0},{glow:1,duration:.08},HIT-.08).to(WX,{glow:.1,duration:1.4,ease:'power2.out'},HIT)
+  .fromTo(WX,{ring:0},{ring:1,duration:.9,ease:'power1.inOut'},HIT-.05);
+tl.fromTo('#tag',{opacity:0,y:8},{opacity:1,y:0,duration:.9,ease:'power2.out'},HIT+.7);
+const DUR = HIT + 3.0;
+tl.to('#black',{opacity:1,duration:.6,ease:'power1.in'},DUR-.6);
+tl.set({}, {}, DUR);
+
+/* ---------- per-frame drawing of non-tweenable things ---------- */
+const $=id=>document.getElementById(id);
+const blob=$('blob'), blobSh=$('blobShadow'), rim=$('rim'), gsH=$('gsH'), glow=$('glow'),
+      drop=$('drop'), dropHi=$('dropHi'), dropSh=$('dropShadow'), spec=$('spec'), col=$('waxcol');
+const SAT=[[0.6,1.32,6],[2.1,1.38,4.5],[3.4,1.28,5.5],[4.7,1.42,3.5],[5.6,1.3,4]];
+const sats=$('sats'); SAT.forEach(()=>sats.insertAdjacentHTML('beforeend','<circle fill="#fff" fill-opacity=".45"/>'));
+const ND=28, dH=$('dotsH'), dG=$('dotsG');
+for(let i=0;i<ND;i++){const a=i/ND*Math.PI*2, x=Math.cos(a)*51, y=Math.sin(a)*51;
+  dH.insertAdjacentHTML('beforeend',`<circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="1.5" fill="#fff" fill-opacity="0"/>`);
+  dG.insertAdjacentHTML('beforeend',`<circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="1.8" fill="#ffcf6a" opacity="0"/>`);}
+const mix=(a,b,t)=>a+(b-a)*t, hex=(r,g,b)=>'#'+[r,g,b].map(v=>Math.round(v).toString(16).padStart(2,'0')).join('');
+const cv=$('embers'), cx=cv.getContext('2d');
+const EM=[...Array(26)].map(()=>({a:rnd()*6.283,r:1.0+rnd()*.25,v:30+rnd()*60,d:rnd()*1.0,s:.6+rnd()*1.1,sw:rnd()*6}));
+
+function draw(t){
+  // leaf shading
+  for(const L of [...leaves,cover]){
+    const a=gsap.getProperty(L,'rotationY'), f=Math.sin(Math.abs(a)*Math.PI/180);
+    for(const d of L.querySelectorAll('.dyn')) d.style.opacity=(0.5*f).toFixed(3);
+  }
+  // falling drop: grows as it approaches, shadow tightens under it
+  const q=WX.drop;
+  drop.setAttribute('r',q>0?(3+9*q).toFixed(2):0); dropHi.setAttribute('r',q>0?(1+2.5*q).toFixed(2):0);
+  drop.setAttribute('cy',(-30*(1-q)).toFixed(2)); dropHi.setAttribute('cy',(-30*(1-q)-2).toFixed(2));
+  dropSh.setAttribute('rx',q>0?(4+6*q).toFixed(2):0); dropSh.setAttribute('ry',q>0?(3+5*q).toFixed(2):0);
+  dropSh.setAttribute('cx',(10*(1-q)).toFixed(2)); dropSh.setAttribute('opacity',(.2+.35*q).toFixed(2));
+  // blob outline: organic, wobbling while liquid
+  const R=WX.R;
+  if(R>0.2){
+    let d=''; const N=120;
+    for(let i=0;i<=N;i++){const th=i/N*Math.PI*2;
+      const r=R*(1+.055*Math.sin(3*th+1.1)+.035*Math.sin(5*th+2.3)+.02*Math.sin(9*th+.4)
+               +WX.wob*.07*Math.sin(7*th+t*14)*Math.sin(t*9+th));
+      d+=(i?'L':'M')+(r*Math.cos(th)).toFixed(2)+' '+(r*Math.sin(th)).toFixed(2);}
+    blob.setAttribute('d',d+'Z'); blobSh.setAttribute('d',d+'Z'); blobSh.setAttribute('opacity','.55');
+  } else {blob.setAttribute('d',''); blobSh.setAttribute('d','');}
+  // splash satellites drawn back in
+  [...sats.children].forEach((c,i)=>{const [a,dist,r]=SAT[i];
+    const D=R*mix(1.0,dist,WX.sat);
+    c.setAttribute('cx',(Math.cos(a)*D).toFixed(2)); c.setAttribute('cy',(Math.sin(a)*D).toFixed(2));
+    c.setAttribute('r',(R>0.2?r*WX.sat:0).toFixed(2));});
+  // letters and rim rise out of the wax (height = alpha on the height map)
+  const k=Math.max(0,WX.k);
+  gsH.setAttribute('fill-opacity',(.55*Math.min(k,1.2)).toFixed(3));
+  gsH.setAttribute('transform',`scale(${(0.86+0.14*Math.min(k,1)).toFixed(3)})`);
+  rim.setAttribute('stroke-opacity',(.3*Math.min(k,1)).toFixed(3));
+  [...dH.children].forEach(c=>c.setAttribute('fill-opacity',(.28*Math.min(k,1)).toFixed(3)));
+  // cooling: bright glossy hot wax -> deep matte red
+  const h=WX.heat;
+  col.setAttribute('flood-color',hex(mix(150,205,h),mix(10,30,h),mix(22,20,h)));
+  spec.setAttribute('specularExponent',mix(30,16,h).toFixed(2));
+  spec.setAttribute('specularConstant',mix(.8,1.5,h).toFixed(3));
+  // magic: gold in the letters, a wave of light around the ring
+  glow.setAttribute('opacity',WX.glow.toFixed(3));
+  [...dG.children].forEach((c,i)=>{const ph=WX.ring*1.4-i/ND; const v=Math.max(0,1-Math.abs(ph-.2)*4);
+    c.setAttribute('opacity',(Math.min(1,v)*0.95+0.12*WX.glow).toFixed(3));});
+  $('flash').style.opacity=(.6*WX.flash).toFixed(3);
+  // steam
+  [0,1,2].forEach(i=>{const s=$('st'+i), tt=t*0.6+i*1.7, rise=(tt%1.6)/1.6;
+    s.style.left=(180-45+Math.sin(tt*2+i)*16+(i-1)*24)+'px'; s.style.top=(300-45-rise*70)+'px';
+    s.style.opacity=(WX.steam*(1-rise)*0.9).toFixed(3);});
+  // embers rising off the seal after the hit
+  cx.clearRect(0,0,1080,1920);
+  if(t>HIT) for(const e of EM){const age=t-HIT-e.d*0.6; if(age<0||age>1.8) continue;
+    const x=(180+Math.cos(e.a)*70*e.r+Math.sin(age*3+e.sw)*6)*3, y=(300+Math.sin(e.a)*70*e.r-e.v*age)*3,
+          al=Math.max(0,1-age/1.8)*0.8, rr=e.s*3*(1-age/3);
+    const g=cx.createRadialGradient(x,y,0,x,y,rr*3); g.addColorStop(0,`rgba(255,210,120,${al})`); g.addColorStop(1,'rgba(255,150,40,0)');
+    cx.fillStyle=g; cx.beginPath(); cx.arc(x,y,rr*3,0,6.29); cx.fill();}
+}
+
+window.DURATION=+DUR.toFixed(3); window.HITS=[EV.close, EV.splat, EV.hit]; window.EVENTS=EV;
+window.seek=t=>{ tl.seek(Math.min(t,window.DURATION-1e-4),false); draw(t); };
+const imgs=[...new Set([...document.querySelectorAll('[style*="background-image"]')].map(e=>e.style.backgroundImage.slice(5,-2)))]
+  .map(src=>{const im=new Image(); im.src=src; return im.decode().catch(()=>{});});
+window.ready=Promise.all([document.fonts.load('600 58px Cinzel'),document.fonts.load('italic 21px Fell'),document.fonts.ready,...imgs])
+  .then(()=>{window.seek(0);return true;});
+</script></body></html>

@@ -1,0 +1,8 @@
+frames/
+node_modules/
+sfx.wav
+sfx_raw.wav
+hits.json
+*_sheet.png
+*_hits.png
+__pycache__/
