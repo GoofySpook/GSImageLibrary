@@ -18,7 +18,7 @@ SH:[
  {k:'light',x:.5,y:.68,r:.26,col:[.25,1,.5],amt:.4,fl:1.2},{k:'eyes',x:.545,y:.31,x2:.61,y2:.38,r:.008,col:[.65,1,.75],on:13.4,bl:[]}]},
 {s:15.6,e:17.6,a:'sword',z:[1.12,1.2],c:[.5,.52],d:[.3,-.3],part:{col:[1,.7,.3],v:[.02,.1],n:1,size:.8},
  fx:[{k:'glint',x:.64,y:.47,x2:.13,y2:.98,w:.04,t0:15.62,t1:16.2},{k:'light',x:.69,y:.43,r:.09,col:[1,.5,.1],amt:.6,fl:1}]},
-{s:17.6,e:20.2,a:'mage',z:[1.04,1.12],c:[.42,.4],c2:[.32,.4],d:[.6,.2],flow:.014,part:{col:[.6,.9,1],v:[.018,.08],n:1,size:.9},
- fx:[{k:'orb',x:.13,y:.37,r:.16,col:[.45,.85,1]},{k:'fog',y:.92,col:[.5,.75,1],amt:.5}]}
+{s:17.6,e:20.2,a:'mage',z:[1.04,1.12],c:[.42,.4],c2:[.32,.4],d:[.6,.2],flow:.009,part:{col:[.6,.9,1],v:[.018,.08],n:1,size:.9},
+ fx:[{k:'orb',x:.115,y:.36,r:.055,col:[.45,.85,1]},{k:'fog',y:.92,col:[.5,.75,1],amt:.5}]}
 ],
 CAP:[[.5,3.1,'SEVEN KNIGHTS RODE OUT AT DAWN'],[3.9,6.6,'THEIR BANNERS STILL HANG IN THE HALL'],[7.15,9.9,'THE ROAD HOME RUNS THROUGH THE DARK WOOD'],[10.25,12.3,'AND THE WOOD IS WATCHING'],[12.7,15.3,'SHE HAS KEPT THE FIRE LIT, FOR YOU'],[15.75,17.3,'DRAW STEEL'],[17.9,19.9,'OR CALL THE OLD FLAME']]};

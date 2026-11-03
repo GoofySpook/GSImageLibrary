@@ -51,7 +51,7 @@ wet=np.stack([ss.fftconvolve(fx[:,i],ir)[:N] for i in (0,1)],1);fx=fx+.22*wet
 LINES=[(.5,1),(3.9,2),(7.15,3),(10.25,4),(12.7,5),(15.75,6),(17.9,7)]
 v=np.zeros(N)
 for t0,i in LINES:
-    y,_=librosa.load(f'{S}/r2/voice/l{i}.wav',sr=sr,mono=True);y=y/np.abs(y).max()*.8;a=int(t0*sr);v[a:a+len(y)]+=y[:N-a]
+    y,_=librosa.load(f'{S}/r2/voice2/l{i}.wav',sr=sr,mono=True);y=y/np.sqrt((y[np.abs(y)>.01]**2).mean())*.19;a=int(t0*sr);v[a:a+len(y)]+=y[:N-a]
 v=ss.sosfilt(ss.butter(2,90,'high',fs=sr,output='sos'),v)
 vw=.1*ss.fftconvolve(v,ir)[:N];vst=np.stack([v+vw,v+vw],1)
 # music + duck
