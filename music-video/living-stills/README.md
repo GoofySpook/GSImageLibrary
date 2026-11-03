@@ -1,7 +1,7 @@
 # Living stills (2.5D reels)
 
 Still art that breathes: 1080x1920, voice, music, SFX, captions. First test 2026-11-03: 23 s, 7 plates,
-19 min render on 2 cores, built in about 2 hours of session time including new effects.
+19 min render on 2 cores.
 
 - `template/assets/film.js`: shots, effects, captions. This is the file to change per reel.
 - `tools/prep.py`: plates at 2048 high plus depth maps and coordinate grids (`sheets/g_*.jpg`).
