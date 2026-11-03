@@ -1,0 +1,25 @@
+<template id="title-template">
+<div id="root" data-composition-id="title" data-width="1920" data-height="1080">
+  <style>
+    @font-face{font-family:Cinzel;src:url(assets/fonts/Cinzel.ttf);font-weight:400 900}
+    #root{width:1920px;height:1080px;position:relative;overflow:hidden}
+    #tt{position:absolute;left:0;right:0;top:444px;text-align:center;font:600 128px/1.1 Cinzel,serif;white-space:nowrap}
+    .w{display:inline-block;margin:0 22px}
+    #t1{color:#ffb064;text-shadow:0 0 34px rgba(255,110,30,.65)}
+    #t2{color:#e9e2d2;font-size:62px;vertical-align:18px}
+    #t3{color:#9fe4ff;text-shadow:0 0 34px rgba(50,170,255,.65)}
+    #tag{position:absolute;left:0;right:0;top:612px;text-align:center;font:500 30px/1 Cinzel,serif;letter-spacing:12px;color:#c8a84b}
+  </style>
+  <div id="tt"><span id="t1" class="w">CALL</span><span id="t2" class="w">and</span><span id="t3" class="w">RESPONSE</span></div>
+  <div id="tag">GS GRIMOIRE</div>
+  <script>
+    const tl=gsap.timeline({paused:true});
+    tl.from("#t1",{x:-90,opacity:0,duration:.34,ease:"expo.out"},0)
+      .from("#t3",{x:90,opacity:0,duration:.34,ease:"expo.out"},.17)
+      .from("#t2",{opacity:0,duration:.25},.3)
+      .from("#tag",{opacity:0,y:10,duration:.3,ease:"power2.out"},.42)
+      .to("#tt,#tag",{opacity:0,duration:.16,ease:"none"},1.06);
+    window.__timelines["title"]=tl;
+  </script>
+</div>
+</template>

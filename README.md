@@ -13,8 +13,11 @@ a `render.sh` with the exact command used, and the finished MP4.
 |---|---|---|---|---|
 | 2026-10-21 | **Gold Rune sting.** Rune circle draws, GS GRIMOIRE resolves out of blur, light hit, "The Archive is open" | 6.0 s | [`stings/2026-10-21-gold-rune`](stings/2026-10-21-gold-rune) | [MP4](stings/2026-10-21-gold-rune/GS_Grimoire_Sting_GoldRune_1080x1920.mp4) |
 | 2026-10-21 | **Wax Seal sting.** A bestiary of real GS art riffles backwards, the book closes, hot wax drops, GS rises out of it, "Sealed in the Archive" | 9.4 s | [`stings/2026-10-21-wax-seal`](stings/2026-10-21-wax-seal) | [MP4](stings/2026-10-21-wax-seal/GS_Grimoire_Sting_WaxSeal_1080x1920.mp4) |
+| 2026-11-02 | **Call and Response teaser.** Fire calls, ice answers, 16:9 music video teaser. Track not included | 30 s | [`music-video/pieces/2026-11-02-call-and-response-teaser`](music-video/pieces/2026-11-02-call-and-response-teaser) | not published here |
 
-All pieces are 1080 × 1920, 30 fps, H.264 with `+faststart`, audio between −14 and −17 LUFS.
+Toolkit and templates for music videos: [`music-video`](music-video).
+
+All stings are 1080 × 1920, 30 fps, H.264 with `+faststart`, audio between −14 and −17 LUFS.
 
 ## Re-using a piece
 
