@@ -1,0 +1,15 @@
+<template id="type-template"><div id="root" data-composition-id="type" data-width="1080" data-height="1920">
+<style>@font-face{font-family:Anton;src:url(assets/fonts/Anton.ttf)}@font-face{font-family:Cinzel;src:url(assets/fonts/Cinzel.ttf);font-weight:400 900}
+#root{width:1080px;height:1920px;position:relative;overflow:hidden}
+.cap{text-wrap:balance;position:absolute;left:90px;right:90px;bottom:430px;text-align:center;color:#fff;font:400 66px/1.12 Anton,sans-serif;opacity:0;text-shadow:0 0 5px #000,0 0 5px #000,0 0 5px #000,3px 3px 0 #000,-3px 3px 0 #000,3px -3px 0 #000,-3px -3px 0 #000,0 4px 26px #000}
+#end{position:absolute;left:0;right:0;top:800px;text-align:center;opacity:0}
+#e1{font:600 104px/1.1 Cinzel,serif;color:#e7c86a;text-shadow:0 0 30px rgba(230,170,50,.55)}#e2{font:500 38px/1.3 Cinzel,serif;letter-spacing:7px;color:#f2ead8;margin-top:22px}
+#ti{position:absolute;left:40px;right:40px;top:1060px;text-align:center;opacity:0;text-shadow:0 0 18px #000,0 0 40px #000}#t1{font:600 84px/1.12 Cinzel,serif;color:#e7c86a}#t2{font:500 46px/1.3 Cinzel,serif;letter-spacing:12px;color:#f2ead8;margin-top:24px}</style>
+
+<div id="c0" class="cap"></div><div id="c1" class="cap"></div><div id="c2" class="cap"></div><div id="c3" class="cap"></div><div id="c4" class="cap"></div><div id="c5" class="cap"></div><div id="c6" class="cap"></div><div id="c7" class="cap"></div><div id="c8" class="cap"></div><div id="c9" class="cap"></div><div id="c10" class="cap"></div><div id="c11" class="cap"></div><div id="c12" class="cap"></div><div id="ti"><div id="t1">BOOKS WORTH READING</div><div id="t2">ENTRY ONE</div></div><div id="end"><div id="e1">GS GRIMOIRE</div></div>
+<script src="assets/film.js"></script><script>
+const tl=gsap.timeline({paused:true});
+FILM.CAP.forEach((c,i)=>{const e=document.getElementById('c'+i);e.textContent=c[2];const big=false;
+ tl.set(e,{opacity:0},0);tl.fromTo(e,{opacity:0,y:18},{opacity:1,y:0,duration:big?.12:.22,ease:'power2.out'},c[0]);tl.to(e,{opacity:0,duration:.14,ease:'none'},c[1]);});
+tl.fromTo('#ti',{opacity:0,y:14},{opacity:1,y:0,duration:.45,ease:'power2.out'},.45);tl.to('#ti',{opacity:0,duration:.2,ease:'none'},3.25);tl.fromTo('#end',{opacity:0,scale:1.04},{opacity:1,scale:1,duration:.4,ease:'power2.out'},52.75);tl.to('#end',{opacity:0,duration:.3,ease:'none'},54.2);
+window.__timelines["type"]=tl;</script></div></template>
